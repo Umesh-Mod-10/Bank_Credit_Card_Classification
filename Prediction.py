@@ -10,6 +10,7 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier
+from sklearn.metrics import accuracy_score
 
 # %% Loading the dataset:
 
@@ -55,13 +56,13 @@ Y = data.iloc[:, 13]
 X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.20)
 
 # %% Fitting into Machine Learning Models:
-
 # Logistic Regression:
 
-lr = LogisticRegression(max_iter=10000)
+lr = LogisticRegression()
 lr.fit(X_train, y_train.ravel())
 Y_predict = lr.predict(X_test)
 lr1 = lr.score(X_train, y_train)
+print(accuracy_score(Y_predict , y_test))
 
 # %% Gradient Boosting Classifier:
 
@@ -69,6 +70,7 @@ gbc = GradientBoostingClassifier(n_estimators=500, learning_rate=0.05, random_st
 gbc.fit(X_train, y_train.ravel())
 Y_predict = gbc.predict(X_test)
 gbc1 = gbc.score(X_train, y_train)
+print(accuracy_score(Y_predict , y_test))
 
 # %% Random Forest Classifier:
 
@@ -76,13 +78,15 @@ Rf = RandomForestClassifier(n_jobs=-1, n_estimators=500, random_state=100, max_f
 Rf.fit(X_train, y_train.ravel())
 Y_predict = Rf.predict(X_test)
 rf1 = Rf.score(X_train, y_train)
+print(accuracy_score(Y_predict , y_test))
 
 # %% XGB Classifer:
 
-xgb_r = xg.XGBRegressor(n_estimators=1000, verbosity=3, n_jobs=-1)
+xgb_r = xg.XGBClassifier(n_estimators=150, verbosity=3, n_jobs=-1)
 xgb_r.fit(X_train, y_train)
 Y_predict = xgb_r.predict(X_test)
 xbr1 = xgb_r.score(X_train, y_train)
+print(accuracy_score(Y_predict , y_test))
 
 # %% Tabulation of the results:
 
